@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NotesByKiki — Notes for every subject</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --lavender: #E9E6FF;
+      --cream: #FFF7ED;
+      --accent: #BFA6FF;
+      --muted: #6b6b6b;
+      --card: #fff;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:0;
+      background: linear-gradient(180deg, var(--lavender) 0%, #F6F3FF 100%);
+      color:#2b2b2b;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    header{
+      background: radial-gradient(circle at 20% 10%, rgba(191,166,255,0.15), transparent 30%),
+                  linear-gradient(180deg, rgba(255,247,237,0.85), rgba(255,255,255,0.6));
+      padding:44px 20px;
+      text-align:center;
+      border-bottom: 1px solid rgba(189, 158, 255, 0.2);
+    }
+    .brand{
+      font-family: "Great Vibes", cursive;
+      font-size: 44px;
+      color: #4b2d7a;
+      margin: 0;
+      letter-spacing: .5px;
+    }
+    .tagline{
+      margin-top:6px;
+      color: var(--muted);
+      font-weight:300;
+    }
+
+    main{max-width:1000px;margin:30px auto;padding:0 20px;}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:24px;}
+    @media(max-width:900px){ .grid{grid-template-columns:1fr;}}
+    
+    .card{
+      background: var(--card);
+      border-radius:14px;
+      box-shadow: 0 6px 22px rgba(88,66,147,0.06);
+      padding:18px;
+    }
+    .intro{padding:18px 22px;margin-bottom:14px;border-radius:12px;background:linear-gradient(180deg, #fff, var(--cream));}
+    .intro h2{margin:6px 0;font-size:20px;color:#4b2d7a;}
+    .intro p{margin:0;color:var(--muted);}
+
+    /* Products */
+    .products { display:flex; flex-direction:column; gap:12px; }
+    .product{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      padding:12px;border-radius:10px;background:linear-gradient(180deg,#fff,#FBFAFF);
+      border:1px solid rgba(191,166,255,0.08);
+    }
+    .product .left{display:flex;gap:12px;align-items:center}
+    .dot{
+      min-width:52px;height:52px;border-radius:10px;background:linear-gradient(180deg,var(--accent),#C9B7FF);
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      font-size:14px;
+    }
+    .product h3{margin:0;font-size:16px;color:#4b2d7a;}
+    .product p{margin:0;color:var(--muted);font-size:13px;}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .pages{
+      width:90px;padding:6px 8px;border-radius:8px;border:1px solid #eee;font-size:14px;
+    }
+    .addBtn{
+      background:var(--accent);border:none;color:white;padding:8px 10px;border-radius:8px;cursor:pointer;
+    }
+
+    /* Cart */
+    .cartHeader{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .cartList{display:flex;flex-direction:column;gap:8px;max-height:320px;overflow:auto;padding-right:6px}
+    .cartItem{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:8px;padding:8px;border:1px solid rgba(0,0,0,0.03)}
+    .small{font-size:13px;color:var(--muted)}
+    .totalRow{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(0,0,0,0.05)}
+    .primaryPay{width:100%;background:#4b2d7a;color:white;padding:10px;border-radius:10px;border:none;font-weight:600;cursor:pointer}
+
+    .mutebox{background:linear-gradient(180deg,var(--cream),#FFF9F2);padding:12px;border-radius:10px;border:1px solid rgba(191,166,255,0.06)}
+    .actions{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .copyBtn{background:#fff;border:1px dashed rgba(75,45,122,0.12);padding:8px;border-radius:8px;cursor:pointer}
+    .appleNote{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+
+    footer{text-align:center;padding:20px;color:var(--muted);font-size:13px}
+    a.insta{color:#6b2ea8;font-weight:600;text-decoration:none}
+    .small-muted{font-size:12px;color:#8a8a8a}
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 class="brand">NotesByKiki</h1>
+  <div class="tagline">Affordable digital study notes — $1 per page ✨</div>
+</header>
+
+<main>
+  <div class="grid">
+    <!-- Left column -->
+    <section>
+      <div class="card intro">
+        <h2>What I sell</h2>
+        <p>Affordable digital study notes for high school Algebra, Biology, English — basically all subjects. Each note page is <strong>$1</strong>. Choose subject(s), add page counts, and follow the payment instructions to get your files.</p>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;color:#4b2d7a;">Notes — pick pages</h2>
+        <div class="products" id="products">
+          <!-- JS will populate subject cards -->
+        </div>
+        <p class="small-muted" style="margin-top:10px">Tip: ask for custom topics in the DM (e.g., "Algebra: quadratic formula notes — 5 pages").</p>
+      </div>
+
+      <div style="height:18px"></div>
+
+      <div class="card">
+        <h2 style="margin-top:0;color:#4b2d7a;">How delivery works</h2>
+        <div class="mutebox">
+          <ol style="margin:6px 0 0 18px;padding:0">
+            <li>Pay using Cash App ($KaySugarCorner) or Apple Pay (if supported on your device).</li>
+            <li>DM me on Instagram <strong>@Kayssugarcorner</strong> with a screenshot of the payment + what notes/pages you paid for.</li>
+            <li>I’ll reply with a download link or send the files directly to your DMs or email (if you prefer).</li>
+          </ol>
+        </div>
+        <p class="small-muted" style="margin-top:10px">If you have questions, DM before paying so I can confirm availability.</p>
+      </div>
+    </section>
+
+    <!-- Right column (cart + payments) -->
+    <aside>
+      <div class="card">
+        <div class="cartHeader">
+          <div>
+            <strong>Your Cart</strong>
+            <div class="small">Items added appear below</div>
+          </div>
+          <div class="small-muted" id="itemCount">0 items</div>
+        </div>
+
+        <div class="cartList" id="cartList">
+          <div class="small muted">Cart is empty — add some pages from the left.</div>
+        </div>
+
+        <div class="totalRow">
+          <div class="small">Total</div>
+          <div><strong id="totalPrice">$0</strong></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <button id="applePayBtn" class="primaryPay">Pay with Apple Pay</button>
+          <div style="height:8px"></div>
+          <button id="copyCashBtn" class="copyBtn">Copy Cash App tag ($KaySugarCorner)</button>
+          <div style="height:8px"></div>
+          <button id="getDMBtn" class="copyBtn">Open Instagram DM to me</button>
+
+          <div style="height:10px"></div>
+          <div class="appleNote">
+            <div style="width:10px;height:10px;border-radius:2px;background:var(--accent)"></div>
+            <div>
+              <small class="small-muted">Apple Pay: only works on supported Apple devices with Apple Pay set up. If the Apple Pay checkout doesn't work, please use Cash App and DM your payment screenshot.</small>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="small-muted">
+          After paying: DM <a class="insta" id="instaLink" href="https://instagram.com/Kayssugarcorner" target="_blank">@Kayssugarcorner</a> with the screenshot and what you bought. I will reply with download links.
+        </div>
+      </div>
+
+      <div style="height:12px"></div>
+
+      <div class="card">
+        <h3 style="margin:0;color:#4b2d7a">Quick invoice</h3>
+        <p class="small-muted">Generate a small invoice text file you can attach to your DM if you want.</p>
+        <textarea id="invoiceText" style="width:100%;height:90px;border-radius:8px;border:1px solid #eee;padding:8px;font-size:13px" readonly></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="downloadInv" class="copyBtn">Download invoice</button>
+          <button id="copyInv" class="copyBtn">Copy invoice</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div>Made with 💜 by Kiki — NotesByKiki</div>
+</footer>
+
+<script>
+/* ---------------------------
+   Configuration (edit here)
+   --------------------------- */
+const shopName = "NotesByKiki";
+const cashAppTag = "$KaySugarCorner";
+const instagramHandle = "Kayssugarcorner"; // without @
+const pricePerPage = 1; // USD
+
+// subjects to show by default (you can edit)
+const subjects = [
+  "Algebra",
+  "Biology",
+  "English",
+  "Chemistry",
+  "History",
+  "Physics",
+  "Spanish",
+  "Geometry",
+  "Calculus",
+  "Economics",
+  "Other / Request a topic"
+];
+
+/* ---------------------------
+   App logic (do not edit)
+   --------------------------- */
+const productsEl = document.getElementById('products');
+const cartList = document.getElementById('cartList');
+const totalPriceEl = document.getElementById('totalPrice');
+const itemCountEl = document.getElementById('itemCount');
+const invoiceArea = document.getElementById('invoiceText');
+const instaLink = document.getElementById('instaLink');
+
+instaLink.href = `https://instagram.com/${instagramHandle}`;
+
+// create product UI
+subjects.forEach((sub, i) => {
+  const el = document.createElement('div');
+  el.className = 'product';
+  el.innerHTML = `
+    <div class="left">
+      <div class="dot">${sub.split(" ").map(s=>s[0]).slice(0,2).join("")}</div>
+      <div>
+        <h3>${sub}</h3>
+        <p class="small">Notes for ${sub} — $${pricePerPage} per page</p>
+      </div>
+    </div>
+    <div class="controls">
+      <input class="pages" type="number" min="1" value="1" title="Pages" />
+      <button class="addBtn">Add</button>
+    </div>
+  `;
+  productsEl.appendChild(el);
+
+  const pagesInput = el.querySelector('.pages');
+  const addBtn = el.querySelector('.addBtn');
+
+  addBtn.addEventListener('click', () => {
+    const pages = Math.max(1, Math.floor(Number(pagesInput.value) || 1));
+    addToCart({ title: sub, pages, unit: pricePerPage });
+    pagesInput.value = 1;
+  });
+});
+
+/* Cart */
+let cart = [];
+
+function addToCart(item){
+  cart.push(item);
+  renderCart();
+}
+
+function removeFromCart(idx){
+  cart.splice(idx,1);
+  renderCart();
+}
+
+function renderCart(){
+  cartList.innerHTML = '';
+  if(cart.length === 0){
+    cartList.innerHTML = '<div class="small-muted">Cart is empty — add some pages from the left.</div>';
+    totalPriceEl.textContent = '$0';
+    itemCountEl.textContent = '0 items';
+    generateInvoice();
+    return;
+  }
+  cart.forEach((ci, idx) => {
+    const div = document.createElement('div');
+    div.className = 'cartItem';
+    div.innerHTML = `
+      <div>
+        <div style="font-weight:600">${ci.title}</div>
+        <div class="small">Pages: ${ci.pages} &middot; $${ci.unit}/page</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:700">$${(ci.pages*ci.unit).toFixed(2)}</div>
+        <div style="margin-top:8px">
+          <button class="copyBtn" data-idx="${idx}" style="font-size:12px">Remove</button>
+        </div>
+      </div>
+    `;
+    cartList.appendChild(div);
+
+    div.querySelector('button').addEventListener('click', (e) => {
+      removeFromCart(Number(e.target.dataset.idx));
+    });
+  });
+
+  const total = cart.reduce((s,i)=>s + i.pages*i.unit, 0);
+  totalPriceEl.textContent = '$' + total.toFixed(2);
+  itemCountEl.textContent = `${cart.length} items`;
+  generateInvoice();
+}
+
+/* Invoice generator */
+function generateInvoice(){
+  const total = cart.reduce((s,i)=>s + i.pages*i.unit, 0);
+  const lines = [];
+  lines.push(`${shopName} — Invoice`);
+  lines.push(`Total: $${total.toFixed(2)}`);
+  lines.push('');
+  if(cart.length === 0){
+    lines.push('Cart is empty.');
+  } else {
+    lines.push('Items:');
+    cart.forEach((c, i) => {
+      lines.push(`${i+1}. ${c.title} — ${c.pages} page(s) @ $${c.unit}/page — $${(c.pages*c.unit).toFixed(2)}`);
+    });
+  }
+  lines.push('');
+  lines.push(`Payment options:`);
+  lines.push(`- Cash App: ${cashAppTag}`);
+  lines.push(`- Apple Pay: if your device supports it, use Apple Pay and then DM @${instagramHandle}`);
+  lines.push('');
+  lines.push(`After payment: DM @${instagramHandle} on Instagram with a screenshot of your payment and this invoice or your order details. I will reply with the download links.`);
+  invoiceArea.value = lines.join('\n');
+}
+
+/* Buttons: copy Cash App tag */
+document.getElementById('copyCashBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(cashAppTag).then(()=>{
+    alert('Cash App tag copied: ' + cashAppTag + '\nNow open Cash App on your device and send the payment, then DM @' + instagramHandle + ' on Instagram with a screenshot.');
+  }).catch(()=>alert('Could not copy automatically — please copy: ' + cashAppTag));
+});
+
+/* Open Instagram DM (prefilled) */
+document.getElementById('getDMBtn').addEventListener('click', () => {
+  const total = cart.reduce((s,i)=>s + i.pages*i.unit, 0).toFixed(2);
+  const message = encodeURIComponent(`Hi Kiki! I paid $${total} for notes. Here is my screenshot and order details:\n\n(Please attach screenshot of payment)\n\nOrder:\n${cart.map(c=>`- ${c.title}: ${c.pages} page(s)`).join('\n')}`);
+  // Opens Instagram in a new tab. IG doesn't reliably accept prefilled messages via URL for all users,
+  // so also open profile as fallback.
+  const dmUrl = `https://www.instagram.com/direct/new/?username=${instagramHandle}&message=${message}`;
+  // fallback: open profile
+  window.open(`https://instagram.com/${instagramHandle}`, '_blank');
+});
+
+/* Download / copy invoice */
+document.getElementById('copyInv').addEventListener('click', () => {
+  navigator.clipboard.writeText(invoiceArea.value).then(()=>alert('Invoice copied to clipboard!')).catch(()=>alert('Unable to copy invoice.'));
+});
+document.getElementById('downloadInv').addEventListener('click', () => {
+  const blob = new Blob([invoiceArea.value], {type: 'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'invoice-notesbykiki.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+});
+
+/* Apple Pay button (simple guidance/fallback).
+   NOTE: Real Apple Pay web checkout requires merchant setup and server-side validation.
+   This button simply attempts a basic Payment Request if available, otherwise prompts instructions.
+*/
+document.getElementById('applePayBtn').addEventListener('click', async () => {
+  const total = cart.reduce((s,i)=>s + i.pages*i.unit, 0);
+  if(total <= 0){
+    alert('Your cart is empty — add pages to your cart first.');
+    return;
+  }
+
+  // Try Payment Request API as a very lightweight attempt for supported browsers (this won't create real Apple Pay without merchant setup)
+  if(window.PaymentRequest){
+    try {
+      const methodData = [{
+        supportedMethods: ['basic-card']
+      }];
+      const details = {
+        total: {label: shopName, amount: {currency: 'USD', value: total.toFixed(2)}}
+      };
+      const req = new PaymentRequest(methodData, details);
+      const resp = await req.show();
+      // For privacy and safety: we will not process card data here.
+      await resp.complete('fail');
+      alert('Sorry — full Apple Pay / card checkout requires merchant setup. Please use Cash App ($KaySugarCorner) or DM me so I can invoice you another way.');
+    } catch (err){
+      console.warn(err);
+      alert('Apple Pay / card checkout not available in this browser. Please use Cash App or DM on Instagram.');
+    }
+  } else {
+    alert('Apple Pay is not available in this browser. If you are on an Apple device with Apple Pay set up, please use Apple Wallet to send the amount and DM @' + instagramHandle + ' with your screenshot.');
+  }
+});
+
+/* initial render */
+renderCart();
+</script>
+
+</body>
+</html>
